@@ -307,6 +307,7 @@ class WriteDetector
 
             case 'cast':
             case 'type-hint':
+            case 'type-hint-strict':
                 $this->passExpression($expression['right']);
                 break;
 

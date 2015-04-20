@@ -220,6 +220,7 @@ class LocalContextPass
                         case 'clone':
                         case 'require':
                         case 'type-hint':
+                        case 'type-hint-strict':
                         case 'minus':
                         case 'new':
                         case 'new-type':
@@ -447,6 +448,7 @@ class LocalContextPass
 
             case 'cast':
             case 'type-hint':
+            case 'type-hint-strict':
                 $this->passExpression($expression['right']);
                 break;
 

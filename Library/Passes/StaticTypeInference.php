@@ -451,6 +451,7 @@ class StaticTypeInference
                 return $expression['left'];
 
             case 'type-hint':
+            case 'type-hint-strict':
                 return $this->passExpression($expression['right']);
 
             case 'variable':

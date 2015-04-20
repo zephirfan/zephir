@@ -57,6 +57,7 @@ use Zephir\Operators\Other\TypeOfOperator;
 use Zephir\Operators\Other\CastOperator;
 use Zephir\Operators\Other\RangeInclusiveOperator;
 use Zephir\Operators\Other\RangeExclusiveOperator;
+use Zephir\Operators\Other\TypeHintOperator;
 use Zephir\Expression\Closure;
 use Zephir\Expression\ClosureArrow;
 use Zephir\Expression\Constants;
@@ -254,34 +255,6 @@ class Expression
         $compilationContext->codePrinter->output('array_init(' . $symbolVariable->getName() . ');');
 
         return new CompiledExpression('array', $symbolVariable->getRealName(), $expression);
-    }
-
-    /**
-     *
-     *
-     * @param array $expression
-     * @param CompilationContext $compilationContext
-     * @return CompiledExpression
-     */
-    public function compileTypeHint($expression, CompilationContext $compilationContext)
-    {
-        $expr = new Expression($expression['right']);
-        $expr->setReadOnly(true);
-        $resolved = $expr->compile($compilationContext);
-
-        if ($resolved->getType() != 'variable') {
-            throw new CompilerException("Type-Hints only can be applied to dynamic variables", $expression);
-        }
-
-        $symbolVariable = $compilationContext->symbolTable->getVariableForRead($resolved->getCode(), $compilationContext, $expression);
-        if (!$symbolVariable->isVariable()) {
-            throw new CompilerException("Type-Hints only can be applied to dynamic variables", $expression);
-        }
-
-        $symbolVariable->setDynamicTypes('object');
-        $symbolVariable->setClassTypes($compilationContext->getFullName($expression['left']['value']));
-
-        return $resolved;
     }
 
     /**
@@ -599,7 +572,17 @@ class Expression
                 return $expr->compile($expression, $compilationContext);
 
             case 'type-hint':
-                return $this->compileTypeHint($expression, $compilationContext);
+                $expr = new TypeHintOperator();
+                $expr->setReadOnly($this->isReadOnly());
+                $expr->setExpectReturn($this->_expecting, $this->_expectingVariable);
+                return $expr->compile($expression, $compilationContext);
+
+            case 'type-hint-strict':
+                $expr = new TypeHintStrictOperator();
+                $expr->setStrict(true);
+                $expr->setReadOnly($this->isReadOnly());
+                $expr->setExpectReturn($this->_expecting, $this->_expectingVariable);
+                return $expr->compile($expression, $compilationContext);
 
             case 'instanceof':
                 $expr = new InstanceOfOperator();

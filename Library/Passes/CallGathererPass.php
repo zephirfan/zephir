@@ -286,6 +286,7 @@ class CallGathererPass
                 break;
 
             case 'type-hint':
+            case 'type-hint-strict':
                 $this->passExpression($expression['right']);
                 break;
 

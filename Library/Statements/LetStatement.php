@@ -128,6 +128,7 @@ class LetStatement extends StatementAbstract
                     case 'property-access':
                     case 'array-access':
                     case 'type-hint':
+                    case 'type-hint-strict':
                         $expr->setReadOnly(true);
                         break;
                 }

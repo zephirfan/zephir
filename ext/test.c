@@ -161,6 +161,7 @@ zend_class_entry *test_statements_ce;
 zend_class_entry *test_strings_ce;
 zend_class_entry *test_ternary_ce;
 zend_class_entry *test_trytest_ce;
+zend_class_entry *test_typehints_ce;
 zend_class_entry *test_typeinstances_ce;
 zend_class_entry *test_typeoff_ce;
 zend_class_entry *test_unknownclass_ce;
@@ -314,6 +315,7 @@ static PHP_MINIT_FUNCTION(test)
 	ZEPHIR_INIT(Test_Strings);
 	ZEPHIR_INIT(Test_Ternary);
 	ZEPHIR_INIT(Test_TryTest);
+	ZEPHIR_INIT(Test_TypeHints);
 	ZEPHIR_INIT(Test_TypeInstances);
 	ZEPHIR_INIT(Test_Typeoff);
 	ZEPHIR_INIT(Test_UnknownClass);
