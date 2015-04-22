@@ -21,4 +21,14 @@ class TypeHints
 
 		return b->getSomething();
 	}
+
+	public function testStrictTypeHint()
+	{
+		var a, b;
+
+		let a = new self(),
+			b = <TypeHints!> a;
+
+		return b->getSomething();
+	}
 }

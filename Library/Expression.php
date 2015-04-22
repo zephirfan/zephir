@@ -578,7 +578,7 @@ class Expression
                 return $expr->compile($expression, $compilationContext);
 
             case 'type-hint-strict':
-                $expr = new TypeHintStrictOperator();
+                $expr = new TypeHintOperator();
                 $expr->setStrict(true);
                 $expr->setReadOnly($this->isReadOnly());
                 $expr->setExpectReturn($this->_expecting, $this->_expectingVariable);
